@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI轉型不能等，3小時帶你無痛上手 | 草屯 AI 課程</title>
+  <meta name="description" content="不用懂電腦，帶手機就能學。5/23、5/30 草屯開課，名額有限，現在報名只要 NT$1,000。">
+  <meta property="og:title" content="AI轉型不能等，3小時帶你無痛上手">
+  <meta property="og:description" content="不用懂電腦，帶手機就能學。5/23、5/30 開課，名額有限">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_TW">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════
+       設計系統：手繪素描風格
+    ══════════════════════════════════════ */
+    :root {
+      --paper:        #FDFBF4;
+      --paper-warm:   #F8F2E4;
+      --paper-card:   #FFFEF8;
+      --paper-green:  #F2F7EE;
+      --paper-yellow: #FFFAE8;
+      --paper-pink:   #FFF5F2;
+
+      --ink:          #1E140A;
+      --ink-mid:      #4A3522;
+      --ink-light:    #8B7050;
+      --ink-faint:    #C8B89A;
+
+      --red:    #C94830;
+      --green:  #4A7240;
+      --yellow: #E8B820;
+      --blue:   #2A5890;
+      --purple: #6A4090;
+      --teal:   #2A7870;
+
+      --shadow: 4px 5px 0px rgba(30,20,10,0.18);
+      --shadow-sm: 2px 3px 0px rgba(30,20,10,0.15);
+
+      --font-hand: 'Caveat', 'Comic Sans MS', cursive;
+      --font-body: 'Patrick Hand', 'Noto Sans TC', sans-serif;
+    }
+
+    /* ══════════ Reset ══════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    a { color: var(--red); text-decoration: none; }
+    a:hover { text-decoration: underline wavy var(--red); }
+
+    /* ══════════ 紙張底色 + 素描本線條紋理 ══════════ */
+    body {
+      font-family: var(--font-body);
+      font-size: 20px;
+      line-height: 1.9;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        /* 橫線（素描本） */
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 31px,
+          rgba(180,160,120,0.13) 31px,
+          rgba(180,160,120,0.13) 32px
+        ),
+        /* 細噪點紙張感 */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════ 隱藏 SVG 濾鏡定義 ══════════ */
+    #svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* ══════════ 容器 ══════════ */
+    .container {
+      width: 100%;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .section { padding: 72px 0 80px; }
+
+    /* ══════════ 手繪標題 ══════════ */
+    .section-title {
+      font-family: var(--font-hand);
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 8px;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+    }
+
+    /* 手繪波浪底線裝飾 */
+    .section-title::after {
+      content: '';
+      display: block;
+      height: 6px;
+      margin-top: 4px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='8'%3E%3Cpath d='M0,4 Q10,1 20,4 Q30,7 40,4 Q50,1 60,4 Q70,7 80,4 Q90,1 100,4 Q110,7 120,4 Q130,1 140,4 Q150,7 160,4 Q170,1 180,4 Q190,7 200,4' stroke='%23E8B820' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x center;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-hand);
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--ink-mid);
+      text-align: center;
+      margin: 16px auto 48px;
+      transform: rotate(0.4deg);
+      display: block;
+    }
+
+    .title-wrap { text-align: center; margin-bottom: 8px; }
+
+    /* ══════════ 手繪卡片 ══════════ */
+    .sketch-card {
+      background: var(--paper-card);
+      border: 2.5px solid var(--ink);
+      /* 不完美圓角，模擬手繪 */
+      border-radius: 3px 14px 6px 12px / 12px 5px 14px 3px;
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+      position: relative;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .sketch-card:hover {
+      transform: translateY(-4px) rotate(0.3deg);
+      box-shadow: 6px 8px 0px rgba(30,20,10,0.16);
+    }
+
+    /* 每張卡片微小旋轉 */
+    .sketch-card:nth-child(1) { transform: rotate(-1.2deg); }
+    .sketch-card:nth-child(2) { transform: rotate(0.8deg); }
+    .sketch-card:nth-child(3) { transform: rotate(-0.5deg); }
+    .sketch-card:nth-child(4) { transform: rotate(1.1deg); }
+    .sketch-card:nth-child(5) { transform: rotate(-0.7deg); }
+    .sketch-card:nth-child(6) { transform: rotate(0.9deg); }
+
+    .sketch-card:nth-child(1):hover { transform: rotate(-1.2deg) translateY(-4px); }
+    .sketch-card:nth-child(2):hover { transform: rotate(0.8deg) translateY(-4px); }
+    .sketch-card:nth-child(3):hover { transform: rotate(-0.5deg) translateY(-4px); }
+    .sketch-card:nth-child(4):hover { transform: rotate(1.1deg) translateY(-4px); }
+    .sketch-card:nth-child(5):hover { transform: rotate(-0.7deg) translateY(-4px); }
+    .sketch-card:nth-child(6):hover { transform: rotate(0.9deg) translateY(-4px); }
+
+    /* ══════════ 手繪按鈕 ══════════ */
+    .btn-sketch {
+      display: inline-block;
+      font-family: var(--font-hand);
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 700;
+      color: #fff;
+      background: var(--red);
+      border: 3px solid var(--ink);
+      border-radius: 6px 18px 8px 16px / 16px 6px 18px 8px;
+      padding: 16px 44px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transform: rotate(-1.2deg);
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      letter-spacing: 0.03em;
+      min-height: 60px;
+      text-decoration: none;
+    }
+    .btn-sketch:hover {
+      transform: rotate(0.6deg) translate(-2px, -3px);
+      box-shadow: 6px 8px 0px rgba(30,20,10,0.22);
+      background: #A83820;
+      color: #fff;
+      text-decoration: none;
+    }
+    .btn-sketch:active { transform: rotate(-0.5deg) translate(2px, 2px); box-shadow: 2px 2px 0 rgba(30,20,10,0.2); }
+
+    /* 綠色按鈕變體 */
+    .btn-sketch-green { background: var(--green); }
+    .btn-sketch-green:hover { background: #365A28; }
+
+    /* ══════════ 手繪區隔線 ══════════ */
+    .sketch-divider {
+      width: 100%;
+      overflow: visible;
+      display: block;
+      margin: 0;
+      line-height: 0;
+    }
+
+    /* ══════════ 手繪圖片框（統一 1:1） ══════════ */
+    .img-frame {
+      position: relative;
+      aspect-ratio: 1 / 1;          /* 全部正方形 */
+      border: 3px solid var(--ink);
+      border-radius: 6px 18px 8px 16px / 16px 6px 18px 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--paper-warm);
+    }
+
+    /* 標籤貼紙 */
+    .img-frame::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 10px; left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+      border-radius: 4px 10px 5px 9px / 9px 4px 10px 5px;
+      padding: 4px 12px;
+      font-family: var(--font-hand);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      box-shadow: 2px 2px 0 var(--ink);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 圖片填滿 1:1 框 */
+    .img-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 佔位內容填滿 1:1 框 */
+    .img-frame .img-placeholder-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--ink-light);
+      font-family: var(--font-hand);
+      font-size: 17px;
+      text-align: center;
+      padding: 20px 16px 48px; /* 底部留給標籤 */
+    }
+    .img-frame .img-placeholder-inner .ph-icon { font-size: 40px; opacity: 0.5; }
+    .img-frame .img-placeholder-inner .ph-size { font-size: 13px; opacity: 0.6; margin-top: 4px; }
+
+    /* Hero：左文右圖 */
+    .hero-layout { display: flex; align-items: center; gap: 48px; }
+    .hero-text { flex: 1; min-width: 0; }
+    .hero-img-wrap { flex: 0 0 360px; max-width: 360px; }
+    .hero-img-wrap .img-frame { transform: rotate(1.5deg); }
+
+    /* 三格氛圍條 */
+    .atmosphere-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 44px 0;
+    }
+    .atmosphere-strip .img-frame:nth-child(1) { transform: rotate(-1.2deg); }
+    .atmosphere-strip .img-frame:nth-child(2) { transform: rotate(0.6deg); margin-top: -10px; }
+    .atmosphere-strip .img-frame:nth-child(3) { transform: rotate(-0.8deg); margin-top: 8px; }
+
+    /* 寬幅圖（1:1 比例，寬度撐滿容器，高度自動等寬） */
+    .wide-img-wrap .img-frame { transform: rotate(-0.5deg); }
+
+    /* 側邊圖 */
+    .side-img-layout { display: flex; align-items: flex-start; gap: 32px; }
+    .side-img-layout .side-content { flex: 1; min-width: 0; }
+    .side-img-layout .side-img { flex: 0 0 280px; max-width: 280px; }
+    .side-img-layout .side-img .img-frame { transform: rotate(1deg); }
+
+    /* 學員見證照 */
+    .testimonial-strip {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 36px 0;
+    }
+    .testimonial-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      max-width: 200px;
+    }
+    .testimonial-item .img-frame {
+      width: 140px;               /* 固定寬，aspect-ratio 自動定高 */
+      border-radius: 50% 46% 54% 48% / 48% 54% 46% 50%;
+      flex-shrink: 0;
+      transform: rotate(-1deg);
+    }
+    .testimonial-item:nth-child(even) .img-frame { transform: rotate(1.2deg); }
+    .testimonial-item .t-quote { font-family: var(--font-hand); font-size: 17px; color: rgba(255,255,255,0.8); text-align: center; line-height: 1.5; }
+    .testimonial-item .t-name  { font-family: var(--font-hand); font-size: 15px; color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 768px) {
+      .hero-layout { flex-direction: column; }
+      .hero-img-wrap { flex: none; max-width: 100%; width: 100%; }
+      .atmosphere-strip { grid-template-columns: 1fr; }
+      .atmosphere-strip .img-frame { transform: none !important; margin-top: 0 !important; }
+      .side-img-layout { flex-direction: column; }
+      .side-img-layout .side-img { max-width: 100%; width: 100%; }
+    }
+
+    /* ══════════ Sticky 底欄 ══════════ */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 999;
+      background: var(--red);
+      border-top: 3px solid var(--ink);
+      padding: 13px 24px;
+      box-shadow: 0 -4px 0 var(--ink);
+    }
+    .sticky-cta a {
+      display: block;
+      text-align: center;
+      font-family: var(--font-hand);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .sticky-cta { display: block; }
+      body { padding-bottom: 68px; }
+    }
+
+    /* ══════════ 占位符 ══════════ */
+    .placeholder {
+      background: #FFF3C0;
+      border: 2px dashed var(--yellow);
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-family: var(--font-hand);
+      font-size: 16px;
+      color: #8B6010;
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 01 — Hero
+    ══════════════════════════════════════ */
+    #section-hero {
+      background: var(--ink);
+      padding: 88px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 手繪圓圈裝飾 */
+    #section-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -60px;
+      width: 280px; height: 280px;
+      border: 4px solid rgba(232,184,32,0.25);
+      border-radius: 53% 47% 61% 39% / 42% 58% 42% 58%;
+      transform: rotate(15deg);
+    }
+    #section-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: -40px;
+      width: 200px; height: 200px;
+      border: 3px solid rgba(201,72,48,0.2);
+      border-radius: 38% 62% 44% 56% / 58% 38% 62% 42%;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-hand);
+      font-size: clamp(24px, 4.5vw, 42px);
+      font-weight: 700;
+      color: var(--yellow);
+      transform: rotate(-1.5deg);
+      display: inline-block;
+      /* 手繪下底線 */
+      border-bottom: 3px solid var(--yellow);
+      padding-bottom: 4px;
+    }
+
+    .hero-title {
+      font-family: var(--font-hand);
+      font-size: clamp(36px, 7vw, 68px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      transform: rotate(0.5deg);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-hand);
+      font-size: clamp(20px, 3vw, 28px);
+      color: rgba(255,255,255,0.8);
+      max-width: 580px;
+      transform: rotate(-0.4deg);
+    }
+
+    /* 手繪膠囊標籤 */
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .badge {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 2.5px solid var(--ink);
+      padding: 7px 18px;
+      border-radius: 30px 8px 28px 10px / 10px 28px 8px 30px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transform: rotate(-1deg);
+      display: inline-block;
+    }
+    .badge:nth-child(even) { transform: rotate(1.2deg); background: #fff; }
+    .badge:nth-child(3) { transform: rotate(-0.5deg); background: #FFE0D8; }
+
+    .hero-note {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      transform: rotate(0.3deg);
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 02 — 急迫性
+    ══════════════════════════════════════ */
+    #section-urgency {
+      background: var(--paper-yellow);
+      padding: 64px 0;
+    }
+
+    .urgency-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 780px;
+      margin: 0 auto 32px;
+    }
+
+    .urgency-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-family: var(--font-hand);
+      font-size: clamp(19px, 2.5vw, 23px);
+      line-height: 1.6;
+      background: var(--paper-card);
+      border: 2.5px solid var(--ink);
+      border-radius: 4px 12px 5px 11px / 11px 4px 12px 5px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .urgency-list li:nth-child(odd) { transform: rotate(-0.6deg); }
+    .urgency-list li:nth-child(even) { transform: rotate(0.5deg); }
+
+    .urgency-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+
+    .urgency-flip {
+      max-width: 780px;
+      margin: 0 auto;
+      background: var(--ink);
+      color: var(--yellow);
+      border: 3px solid var(--ink);
+      padding: 20px 28px;
+      border-radius: 8px 4px 10px 6px / 6px 10px 4px 8px;
+      font-family: var(--font-hand);
+      font-size: clamp(20px, 2.8vw, 26px);
+      font-weight: 700;
+      text-align: center;
+      transform: rotate(-0.5deg);
+      box-shadow: var(--shadow);
+    }
+
+    .urgency-stat {
+      max-width: 780px;
+      margin: 20px auto 0;
+      border: 2px dashed var(--ink-light);
+      border-radius: 6px 14px 8px 12px / 12px 6px 14px 8px;
+      padding: 12px 20px;
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--ink-mid);
+      text-align: center;
+      transform: rotate(0.3deg);
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 03 — 課程好處
+    ══════════════════════════════════════ */
+    #section-benefits { background: var(--paper); }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .benefit-card { min-height: 200px; }
+    .benefit-card:nth-child(1) { background: #EBF5FF; border-left: 5px solid #2A5890; }
+    .benefit-card:nth-child(2) { background: #EBF7EB; border-left: 5px solid var(--green); }
+    .benefit-card:nth-child(3) { background: #FFFAEB; border-left: 5px solid var(--yellow); }
+    .benefit-card:nth-child(4) { background: #FFF0F0; border-left: 5px solid var(--red); }
+    .benefit-card:nth-child(5) { background: #F5EBFF; border-left: 5px solid var(--purple); }
+    .benefit-card:nth-child(6) { background: #EBF7F5; border-left: 5px solid var(--teal); }
+
+    .benefit-emoji { font-size: 38px; margin-bottom: 10px; display: block; }
+
+    .benefit-title {
+      font-family: var(--font-hand);
+      font-size: clamp(19px, 2.2vw, 23px);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .benefit-desc {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.8vw, 18px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    /* 長期好處欄 */
+    .benefits-extra {
+      background: var(--paper-yellow);
+      border: 2.5px solid var(--ink);
+      border-radius: 6px 18px 8px 16px / 16px 6px 18px 8px;
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      transform: rotate(-0.3deg);
+    }
+
+    .benefits-extra-title {
+      font-family: var(--font-hand);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .benefits-extra ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .benefits-extra li {
+      font-family: var(--font-body);
+      font-size: clamp(17px, 2vw, 19px);
+      color: var(--ink-mid);
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.65;
+    }
+    .benefits-extra li::before {
+      content: '✏️';
+      position: absolute;
+      left: 0;
+      font-size: 15px;
+      top: 3px;
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 04 — 課程大綱
+    ══════════════════════════════════════ */
+    #section-outline { background: var(--paper-warm); }
+
+    .outline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .outline-item details {
+      background: var(--paper-card);
+      border: 2.5px solid var(--ink);
+      border-radius: 5px 16px 7px 14px / 14px 5px 16px 7px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .outline-item:nth-child(odd) details { transform: rotate(-0.4deg); }
+    .outline-item:nth-child(even) details { transform: rotate(0.5deg); }
+
+    .outline-item summary {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-hand);
+      font-size: clamp(19px, 2.5vw, 23px);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .outline-item summary::-webkit-details-marker { display: none; }
+    .outline-item summary::after {
+      content: '＋';
+      margin-left: auto;
+      font-size: 26px;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+    .outline-item details[open] summary::after { content: '－'; }
+
+    .outline-emoji { font-size: 28px; flex-shrink: 0; }
+    .outline-meta { font-family: var(--font-hand); font-size: 17px; color: var(--ink-light); font-weight: 400; white-space: nowrap; }
+
+    .outline-content {
+      padding: 0 22px 20px;
+      border-top: 2px dashed var(--ink-faint);
+      font-family: var(--font-body);
+      font-size: clamp(17px, 2vw, 19px);
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+    .outline-content p { padding-top: 14px; }
+
+    /* 色彩標記邊條 */
+    .outline-item:nth-child(1) details { border-left: 6px solid #2A5890; }
+    .outline-item:nth-child(2) details { border-left: 6px solid var(--green); }
+    .outline-item:nth-child(3) details { border-left: 6px solid var(--purple); }
+    .outline-item:nth-child(4) details { border-left: 6px solid var(--red); }
+    .outline-item:nth-child(5) details { border-left: 6px solid var(--teal); }
+    .outline-item:nth-child(6) details { border-left: 6px solid var(--yellow); border-color: var(--ink); border-left-color: var(--yellow); }
+
+    /* ══════════════════════════════════════
+       SECTION 05 — 開課資訊
+    ══════════════════════════════════════ */
+    #section-info { background: var(--paper-green); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      max-width: 860px;
+      margin: 0 auto 32px;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .info-icon { font-size: 30px; flex-shrink: 0; }
+    .info-label {
+      font-family: var(--font-hand);
+      font-size: 16px;
+      color: var(--ink-light);
+      margin-bottom: 3px;
+    }
+    .info-value {
+      font-family: var(--font-hand);
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .info-value.price {
+      font-size: clamp(32px, 5vw, 44px);
+      color: var(--red);
+    }
+    .quota-warn { color: var(--red); font-size: 16px; display: block; margin-top: 4px; }
+    .info-note { font-family: var(--font-body); font-size: 15px; color: var(--ink-light); margin-top: 3px; }
+
+    /* 繳費方式 */
+    .payment-box {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--paper-yellow);
+      border: 2.5px solid var(--ink);
+      border-radius: 8px 20px 10px 18px / 18px 8px 20px 10px;
+      padding: 28px 30px;
+      box-shadow: var(--shadow);
+      transform: rotate(0.3deg);
+    }
+
+    .payment-title {
+      font-family: var(--font-hand);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--ink-faint);
+      padding-bottom: 10px;
+    }
+
+    .payment-options { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .payment-options li {
+      font-family: var(--font-body);
+      font-size: clamp(17px, 2vw, 19px);
+      color: var(--ink-mid);
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .payment-options li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--red);
+      font-family: var(--font-hand);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .payment-confirm {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border: 2px dashed var(--yellow);
+      border-radius: 6px;
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--ink-mid);
+      background: rgba(232,184,32,0.1);
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 06 — 適合誰
+    ══════════════════════════════════════ */
+    #section-who { background: var(--paper); }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .who-col {
+      padding: 28px 24px;
+    }
+    .who-col.good { border-top: 5px solid var(--green); }
+    .who-col.notgood { border-top: 5px solid var(--yellow); }
+
+    .who-col-title {
+      font-family: var(--font-hand);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+
+    .who-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .who-list li {
+      font-family: var(--font-body);
+      font-size: clamp(17px, 2vw, 19px);
+      color: var(--ink-mid);
+      padding-left: 30px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .who-col.good    .who-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 20px; font-family: var(--font-hand); }
+    .who-col.notgood .who-list li::before { content: '✗'; position: absolute; left: 0; color: #8B6010; font-weight: 700; font-size: 20px; font-family: var(--font-hand); }
+
+    .who-notgood-note { margin-top: 12px; font-size: 15px; color: var(--ink-light); font-style: italic; font-family: var(--font-hand); }
+
+    /* ══════════════════════════════════════
+       SECTION 07 — 三重保障
+    ══════════════════════════════════════ */
+    #section-guarantee { background: var(--paper-warm); }
+
+    .guarantee-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .guarantee-card { text-align: center; }
+    .guarantee-emoji { font-size: 44px; margin-bottom: 12px; display: block; }
+    .guarantee-title {
+      font-family: var(--font-hand);
+      font-size: clamp(19px, 2.2vw, 23px);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .guarantee-detail {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.8vw, 18px);
+      color: var(--ink-mid);
+      line-height: 1.75;
+      text-align: left;
+    }
+
+    /* ══════════════════════════════════════
+       SECTION 08 — 報名 CTA
+    ══════════════════════════════════════ */
+    #section-cta {
+      background: var(--ink);
+      padding: 88px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 手繪塗鴉裝飾圓 */
+    #section-cta::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 250px; height: 250px;
+      border: 5px solid rgba(232,184,32,0.2);
+      border-radius: 42% 58% 55% 45% / 55% 42% 58% 45%;
+    }
+
+    .cta-title {
+      font-family: var(--font-hand);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      color: var(--yellow);
+      text-align: center;
+      margin-bottom: 10px;
+      transform: rotate(-1deg);
+      display: block;
+    }
+    .cta-urgency {
+      font-family: var(--font-hand);
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    /* 三重保障摘要 */
+    .cta-guarantees {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+    .cta-g-item {
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 8px 20px 10px 18px / 18px 8px 20px 10px;
+      padding: 16px 18px;
+      text-align: center;
+      min-width: 155px;
+      flex: 1;
+      max-width: 210px;
+    }
+    .cta-g-emoji { font-size: 28px; margin-bottom: 6px; }
+    .cta-g-title { font-family: var(--font-hand); font-weight: 700; color: #fff; font-size: 19px; margin-bottom: 4px; }
+    .cta-g-desc { font-size: 15px; color: rgba(255,255,255,0.65); font-family: var(--font-hand); }
+
+    /* 步驟 */
+    .steps {
+      max-width: 660px;
+      margin: 0 auto 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 6px 18px 8px 16px / 16px 6px 18px 8px;
+      padding: 16px 20px;
+    }
+    .step:nth-child(odd) { transform: rotate(-0.5deg); }
+    .step:nth-child(even) { transform: rotate(0.4deg); }
+
+    .step-num {
+      width: 38px; height: 38px;
+      border-radius: 50% 42% 55% 45% / 45% 55% 42% 50%;
+      background: var(--red);
+      border: 2px solid rgba(255,255,255,0.4);
+      color: #fff;
+      font-family: var(--font-hand);
+      font-weight: 700;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-family: var(--font-hand);
+      font-size: clamp(18px, 2.2vw, 21px);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+      padding-top: 5px;
+    }
+
+    /* QR + 按鈕 */
+    .cta-signup {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 44px;
+      max-width: 680px;
+      margin: 0 auto 36px;
+      flex-wrap: wrap;
+    }
+    .qr-placeholder {
+      width: 210px; height: 210px;
+      border: 3px dashed rgba(255,255,255,0.3);
+      border-radius: 10px 24px 12px 22px / 22px 10px 24px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: rgba(255,255,255,0.45);
+      font-family: var(--font-hand);
+      font-size: 16px;
+      text-align: center;
+      padding: 16px;
+      transform: rotate(-1deg);
+    }
+    .qr-placeholder-icon { font-size: 44px; }
+
+    .cta-btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .cta-note { font-family: var(--font-hand); font-size: 17px; color: rgba(255,255,255,0.55); text-align: center; }
+
+    /* 聯絡 */
+    .cta-contact {
+      text-align: center;
+      margin-top: 28px;
+      font-family: var(--font-hand);
+      font-size: 19px;
+      color: rgba(255,255,255,0.65);
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .cta-contact a { color: var(--yellow); }
+
+    /* Footer */
+    footer {
+      background: #100C06;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 24px;
+      font-family: var(--font-hand);
+      font-size: 16px;
+      border-top: 3px solid rgba(255,255,255,0.08);
+    }
+
+    /* ══════════════════════════════════════
+       響應式
+    ══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .section { padding: 56px 0; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .who-grid { grid-template-columns: 1fr; }
+      .guarantee-cards { grid-template-columns: 1fr; }
+      .cta-signup { flex-direction: column; }
+      .qr-placeholder { display: none; }
+      .cta-g-item { max-width: 100%; }
+      /* 手機版所有卡片恢復直角 */
+      .sketch-card { transform: none !important; }
+      .sketch-card:hover { transform: translateY(-3px) !important; }
+    }
+
+    @media (max-width: 576px) {
+      .hero-badges { flex-direction: column; align-items: center; }
+      .btn-sketch { width: 100%; text-align: center; padding: 16px 24px; }
+      .outline-meta { display: none; }
+      .cta-contact { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ SVG 濾鏡（隱藏） ══════════ -->
+<svg id="svg-filters" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="sketchy-border">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03 0.06" numOctaves="4" seed="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ══════════ Sticky 底欄 ══════════ -->
+<div class="sticky-cta">
+  <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener">✏️ 立即報名，只剩幾個名額！</a>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 01 — Hero
+══════════════════════════════════════ -->
+<section id="section-hero">
+  <div class="container">
+    <div class="hero-layout">
+      <!-- 左側文字 -->
+      <div class="hero-inner hero-text">
+        <span class="hero-tagline">🌿 AI 學了，馬上能用！省時又省錢</span>
+        <h1 class="hero-title">AI轉型不能等<br>3小時帶你無痛上手</h1>
+        <p class="hero-subtitle">不用懂電腦，帶手機就能學，學完當天就能用</p>
+        <div class="hero-badges">
+          <span class="badge">📅 5/23、5/30 開課</span>
+          <span class="badge">⏰ 3 小時</span>
+          <span class="badge">💰 NT$1,000</span>
+          <span class="badge">👥 每場限 30 人</span>
+        </div>
+        <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener" class="btn-sketch">✏️ 按這裡立即報名</a>
+        <p class="hero-note">繳費後確認名額・名額有限・報名從速</p>
+      </div>
+      <!-- 右側情境照 ① -->
+      <div class="hero-img-wrap">
+        <div class="img-frame" data-label="情境照片①">
+          <img src="https://i.ibb.co/B5Vt6Gtb/Chat-GPT-Image-2026-4-23-09-51-48.png" alt="中高齡女性愉快使用手機學習 AI">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#FDFBF4;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C80,8 120,38 200,24 C280,10 340,42 420,28 C500,14 560,40 640,22 C720,4 800,38 880,26 C960,14 1020,40 1100,22 C1180,4 1280,36 1360,20 C1400,12 1430,28 1440,20 L1440,0 L0,0 Z" fill="#1E140A"/>
+    <path d="M0,44 C70,32 140,58 220,40 C300,22 360,52 440,36 C520,20 600,50 680,34 C760,18 840,48 920,32 C1000,16 1080,46 1160,30 C1240,14 1320,44 1400,34 C1420,30 1435,36 1440,34 L1440,60 L0,60 Z" fill="#FFFAE8"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 02 — 急迫性
+══════════════════════════════════════ -->
+<section id="section-urgency" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">你有沒有這種感覺？</h2>
+    </div>
+    <ul class="urgency-list">
+      <li>
+        <span class="urgency-icon">⚠️</span>
+        <span>公司開始用 AI 寫文件，我卻還在一個字一個字慢慢打…</span>
+      </li>
+      <li>
+        <span class="urgency-icon">⚠️</span>
+        <span>年輕同事用 AI 10 分鐘寫完報告，我要花 2 個小時…</span>
+      </li>
+      <li>
+        <span class="urgency-icon">⚠️</span>
+        <span>客戶問我能不能傳電子報，我根本不知道怎麼做…</span>
+      </li>
+      <li>
+        <span class="urgency-icon">⚠️</span>
+        <span>聽說有政府補助的 AI 課，但我連報名都不知道從哪裡開始…</span>
+      </li>
+    </ul>
+    <div class="urgency-flip">這不是你的問題。只是沒有人教你正確的方法。</div>
+    <p class="urgency-stat">📊 台灣 AI 工具使用人數已超過 300 萬，你準備好了嗎？</p>
+
+    <!-- 課前 vs 課後氛圍對比圖 ② ③ -->
+    <div class="atmosphere-strip" style="margin-top:36px;">
+      <div class="img-frame" data-label="情境照片②">
+        <img src="https://i.ibb.co/HLWL3tFY/01.png" alt="課前情境">
+      </div>
+      <div class="img-frame" data-label="情境照片③">
+        <img src="https://i.ibb.co/5WxkB95g/03.png" alt="上課現場">
+      </div>
+      <div class="img-frame" data-label="情境照片④">
+        <img src="https://i.ibb.co/fG9pMNg1/02.png" alt="課後學員成果">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#FDFBF4;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" height="56" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,28 C90,14 160,48 240,30 C320,12 400,46 480,28 C560,10 640,44 720,26 C800,8 880,42 960,28 C1040,14 1120,46 1200,30 C1280,14 1360,42 1440,28 L1440,56 L0,56 Z" fill="#FDFBF4" style="filter:url(#sketchy-border)"/>
+    <path d="M0,28 C90,14 160,48 240,30 C320,12 400,46 480,28 C560,10 640,44 720,26 C800,8 880,42 960,28 C1040,14 1120,46 1200,30 C1280,14 1360,42 1440,28 L1440,0 L0,0 Z" fill="#FFFAE8"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 03 — 課程好處
+══════════════════════════════════════ -->
+<section id="section-benefits" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">學了這 3 小時，你能帶走什麼？</h2>
+    </div>
+    <span class="section-subtitle">不只是知識，而是當天就能用的技能。</span>
+
+    <div class="benefits-grid">
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">💬</span>
+        <h3 class="benefit-title">說話就能打字</h3>
+        <p class="benefit-desc">不用再一個字一個字慢慢打。用語音輸入，說什麼 AI 幫你打什麼，比打字快 10 倍。</p>
+      </div>
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">📧</span>
+        <h3 class="benefit-title">讓 AI 替你寫信</h3>
+        <p class="benefit-desc">請假、回客戶信、感謝卡——告訴 AI 你要說什麼，30 秒出一封正式信件，不用再煩惱措辭。</p>
+      </div>
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">📷</span>
+        <h3 class="benefit-title">拍照自動轉文字</h3>
+        <p class="benefit-desc">名片、收據、紙本表格，拍一張照，AI 幫你把字全部抓出來，再也不用手動抄寫。</p>
+      </div>
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">📊</span>
+        <h3 class="benefit-title">報表整理省一半時間</h3>
+        <p class="benefit-desc">用 AI 建問卷、一鍵統計回應、自動整理成表格，不用再手動複製貼上，省下大半天的工作。</p>
+      </div>
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">☁️</span>
+        <h3 class="benefit-title">資料不怕丟失</h3>
+        <p class="benefit-desc">學會用雲端儲存照片和文件，手機壞了也不怕，家人也可以共用同一份資料，隨時隨地可以看。</p>
+      </div>
+      <div class="sketch-card benefit-card">
+        <span class="benefit-emoji">🚀</span>
+        <h3 class="benefit-title">拿到進階班入場券</h3>
+        <p class="benefit-desc">這堂課完成後，可報名政府補助的 AI 進階班，學費最高補助 80%，這 1,000 元是你最划算的投資。</p>
+      </div>
+    </div>
+
+    <!-- 課程實況寬幅圖 ⑤ -->
+    <div class="wide-img-wrap" style="margin-bottom:32px;">
+      <div class="img-frame" data-label="情境照片⑤">
+        <img src="https://i.ibb.co/20XGCQbJ/Gemini-Generated-Image-7r3dvy7r3dvy7r3d.png" alt="課堂全景">
+      </div>
+    </div>
+
+    <div class="benefits-extra">
+      <p class="benefits-extra-title">✏️ 學會之後，你還可以：</p>
+      <ul>
+        <li>工作機會更多：會 AI 的人在職場上更搶手。即使已工作多年，這個技能讓你「多做 3–5 年」不被取代。</li>
+        <li>省下外包費用：文宣、問卷、報表原本花錢請人做。學完自己做，每個月至少省 1,000–3,000 元。</li>
+        <li>幫助身邊的人：學會後可以教家人、鄰居用 AI，在社區成為大家的「AI 小老師」，建立新價值。</li>
+        <li>持續進修有補助：政府積極推動 AI 人才培育，有補助課程可持續深造，最高補助 80% 學費。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#FDFBF4;">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,26 C60,10 160,46 260,22 C360,-2 440,50 540,26 C640,2 720,46 820,24 C920,2 1000,48 1100,26 C1200,4 1300,44 1380,28 C1410,20 1430,34 1440,28 L1440,52 L0,52 Z" fill="#F8F2E4"/>
+    <path d="M0,26 C60,10 160,46 260,22 C360,-2 440,50 540,26 C640,2 720,46 820,24 C920,2 1000,48 1100,26 C1200,4 1300,44 1380,28 C1410,20 1430,34 1440,28 L1440,0 L0,0 Z" fill="#FDFBF4"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 04 — 課程大綱
+══════════════════════════════════════ -->
+<section id="section-outline" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">3 小時，你會學到什麼？</h2>
+    </div>
+    <span class="section-subtitle">每個單元說明「學完可以做什麼」，不用背術語，當天就能練習。</span>
+
+    <div class="outline-list">
+      <div class="outline-item">
+        <details open>
+          <summary>
+            <span class="outline-emoji">☁️</span>
+            Unit 1　數位地基
+            <span class="outline-meta">30 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>看懂網址不再一頭霧水；用 QR Code 分享課程給朋友；把手機照片存到雲端、再也不怕手機壞掉資料全部不見。</p>
+          </div>
+        </details>
+      </div>
+      <div class="outline-item">
+        <details>
+          <summary>
+            <span class="outline-emoji">📧</span>
+            Unit 2　Google 幫你打理大小事
+            <span class="outline-meta">40 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>用 Gmail 收發正式信件；拍一張名片或收據，AI 自動幫你把字抓出來；用手機日曆提醒重要事情，不再怕忘記。</p>
+          </div>
+        </details>
+      </div>
+      <div class="outline-item">
+        <details>
+          <summary>
+            <span class="outline-emoji">🤖</span>
+            Unit 3　搞懂 AI 到底是什麼
+            <span class="outline-meta">20 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>分清楚「AI」和「Google搜尋」的差別；知道 AI 什麼時候會說錯話，怎麼避免被誤導；自信地和別人說「AI 我懂」。</p>
+          </div>
+        </details>
+      </div>
+      <div class="outline-item">
+        <details>
+          <summary>
+            <span class="outline-emoji">✍️</span>
+            Unit 4　讓 AI 替你寫字、說話
+            <span class="outline-meta">35 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>用說話代替打字（語音輸入）；叫 AI 幫你寫請假申請、商業信件；讓 AI 幫你查資料、做旅遊行程、整理重點摘要。</p>
+          </div>
+        </details>
+      </div>
+      <div class="outline-item">
+        <details>
+          <summary>
+            <span class="outline-emoji">📊</span>
+            Unit 5　AI 幫你整理資料
+            <span class="outline-meta">25 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>建立 Google 表單收問卷；讓 AI 自動統計結果；用樞紐分析一鍵看出誰買最多、哪個時段最忙——老闆看了都滿意。</p>
+          </div>
+        </details>
+      </div>
+      <div class="outline-item">
+        <details>
+          <summary>
+            <span class="outline-emoji">🚀</span>
+            Unit 6　下一步：進入補助班
+            <span class="outline-meta">10 分鐘</span>
+          </summary>
+          <div class="outline-content">
+            <p>了解政府有哪些 AI 補助課程；確認自己符不符合補助資格；當場完成進階班報名意願登記。</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#F8F2E4;">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,18 C100,38 200,8 320,30 C440,52 540,10 660,28 C780,46 880,6 1000,26 C1120,46 1240,8 1360,24 C1400,30 1430,18 1440,22 L1440,52 L0,52 Z" fill="#F2F7EE"/>
+    <path d="M0,18 C100,38 200,8 320,30 C440,52 540,10 660,28 C780,46 880,6 1000,26 C1120,46 1240,8 1360,24 C1400,30 1430,18 1440,22 L1440,0 L0,0 Z" fill="#F8F2E4"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 05 — 開課資訊
+══════════════════════════════════════ -->
+<section id="section-info" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">開課資訊</h2>
+    </div>
+    <span class="section-subtitle">所有資訊一目了然，報名前確認清楚。</span>
+
+    <div class="info-grid">
+      <div class="sketch-card info-card">
+        <span class="info-icon">📍</span>
+        <div>
+          <p class="info-label">上課地點</p>
+          <p class="info-value">南投縣草屯鎮中正路 864 號 4F</p>
+          <p class="info-note">請搭電梯上來</p>
+        </div>
+      </div>
+      <div class="sketch-card info-card">
+        <span class="info-icon">💰</span>
+        <div>
+          <p class="info-label">課程費用</p>
+          <p class="info-value price">NT$ 1,000</p>
+          <p class="info-note">繳費後確認報名，恕不退費</p>
+        </div>
+      </div>
+      <div class="sketch-card info-card">
+        <span class="info-icon">👥</span>
+        <div>
+          <p class="info-label">招生名額</p>
+          <p class="info-value">每場限額 30 人<span class="quota-warn">⚠ 額滿為止</span></p>
+        </div>
+      </div>
+      <div class="sketch-card info-card">
+        <span class="info-icon">🔄</span>
+        <div>
+          <p class="info-label">補課辦法</p>
+          <p class="info-value" style="font-size:19px;">可免費回訓一次</p>
+          <p class="info-note">需提前告知</p>
+        </div>
+      </div>
+      <div class="sketch-card info-card">
+        <span class="info-icon">📅</span>
+        <div>
+          <p class="info-label">5/23（五）</p>
+          <p class="info-value" style="font-size:19px;">上午場 09:00–12:00</p>
+          <p class="info-note">下午場 13:30–16:30</p>
+        </div>
+      </div>
+      <div class="sketch-card info-card">
+        <span class="info-icon">📅</span>
+        <div>
+          <p class="info-label">5/30（五）</p>
+          <p class="info-value" style="font-size:19px;">上午場 09:00–12:00</p>
+          <p class="info-note">下午場 13:30–16:30</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 場地照 ⑥ ⑦ 並排 -->
+    <div class="side-img-layout" style="margin-bottom:28px;">
+      <div class="side-content">
+        <!-- 地圖或交通資訊補充可放這裡 -->
+        <div class="sketch-card" style="height:100%;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+          <span style="font-size:32px;">🗺️</span>
+          <p style="font-family:var(--font-hand);font-size:19px;color:var(--ink-mid);text-align:center;">
+            南投縣草屯鎮<br>中正路 864 號 4F<br>
+            <span style="font-size:16px;color:var(--ink-light);">（請搭電梯上來）</span>
+          </p>
+          <a href="https://maps.app.goo.gl/ocUj4dEH7Jk6svnD6" target="_blank" style="font-family:var(--font-hand);font-size:17px;color:var(--blue);">📍 開啟 Google 地圖導航</a>
+        </div>
+      </div>
+      <div class="side-img">
+        <div class="img-frame" data-label="場地照⑥">
+          <img src="https://i.ibb.co/TqqZC2Zg/Chat-GPT-Image-2026-4-23-10-19-07.png" alt="上課場地">
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-box">
+      <p class="payment-title">🏦 繳費方式（請擇一）</p>
+      <ul class="payment-options">
+        <li>銀行轉帳：玉山銀行 808　帳號：<strong>0700-717-106441</strong>　戶名：<strong>群澄資訊有限公司</strong></li>
+        <li>LINE Pay / 街口支付：掃碼付款（請截圖傳給我們確認）</li>
+        <li>現場繳現：請事先告知，現場繳費後確認名額</li>
+      </ul>
+      <div class="payment-confirm">
+        繳費後請截圖傳至 LINE：<a href="https://lin.ee/5i7hCx0" target="_blank" style="font-weight:700;color:var(--green);">https://lin.ee/5i7hCx0</a>，24 小時內確認報名。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#F2F7EE;">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,32 C80,16 180,48 300,28 C420,8 500,46 620,24 C740,2 840,44 960,22 C1080,0 1180,42 1300,24 C1360,14 1410,36 1440,28 L1440,52 L0,52 Z" fill="#FDFBF4"/>
+    <path d="M0,32 C80,16 180,48 300,28 C420,8 500,46 620,24 C740,2 840,44 960,22 C1080,0 1180,42 1300,24 C1360,14 1410,36 1440,28 L1440,0 L0,0 Z" fill="#F2F7EE"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 06 — 適合誰
+══════════════════════════════════════ -->
+<section id="section-who" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">這堂課適合你嗎？</h2>
+    </div>
+    <span class="section-subtitle">10 秒確認，這堂課是不是為你設計的！</span>
+
+    <div class="who-grid">
+      <div class="sketch-card who-col good">
+        <p class="who-col-title">✅ 非常適合你，如果你是…</p>
+        <ul class="who-list">
+          <li>35 歲以上，對 AI 還很陌生</li>
+          <li>覺得學電腦很難、怕按錯、怕學不會</li>
+          <li>工作上需要寫信、整理資料或做表格</li>
+          <li>想省時間、或替家裡生意降低人力成本</li>
+          <li>希望了解政府有哪些 AI 補助課程</li>
+          <li>想幫自己多一項職場競爭力</li>
+        </ul>
+      </div>
+      <div class="sketch-card who-col notgood">
+        <p class="who-col-title">⚠️ 可能不適合，如果你已經…</p>
+        <ul class="who-list">
+          <li>每天都在用 Gemini、ChatGPT 熟練中</li>
+          <li>已熟悉 Google Workspace 雲端協作</li>
+          <li>想深度學習程式或資料分析</li>
+        </ul>
+        <p class="who-notgood-note">以上屬於進階班，歡迎直接詢問補助班課程。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔 -->
+<div class="sketch-divider" style="background:#FDFBF4;">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,22 C120,44 240,6 360,30 C480,54 600,8 720,28 C840,48 960,4 1080,26 C1200,48 1320,10 1440,28 L1440,52 L0,52 Z" fill="#F8F2E4"/>
+    <path d="M0,22 C120,44 240,6 360,30 C480,54 600,8 720,28 C840,48 960,4 1080,26 C1200,48 1320,10 1440,28 L1440,0 L0,0 Z" fill="#FDFBF4"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 07 — 三重保障
+══════════════════════════════════════ -->
+<section id="section-guarantee" class="section">
+  <div class="container">
+    <div class="title-wrap">
+      <h2 class="section-title">怕學了會忘？怕回家不會用？</h2>
+    </div>
+    <span class="section-subtitle">我們準備了三個保障，讓你放心學、安心用。</span>
+
+    <!-- 講義 / 教材實物照 ⑦ -->
+    <div class="side-img-layout" style="margin-bottom:44px;">
+      <div class="side-img">
+        <div class="img-frame" data-label="教材照⑦">
+          <img src="https://i.ibb.co/PGGz4L3p/04-chatgpt.png" alt="課程講義教材">
+        </div>
+      </div>
+      <div class="side-content">
+        <div class="sketch-card" style="min-height:200px;">
+          <p style="font-family:var(--font-hand);font-size:22px;font-weight:700;color:var(--green);margin-bottom:12px;">📄 你會拿到什麼？</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="font-family:var(--font-body);font-size:18px;color:var(--ink-mid);padding-left:26px;position:relative;line-height:1.6;">
+              <span style="position:absolute;left:0;">✏️</span>圖解步驟講義，每一步都有截圖示範
+            </li>
+            <li style="font-family:var(--font-body);font-size:18px;color:var(--ink-mid);padding-left:26px;position:relative;line-height:1.6;">
+              <span style="position:absolute;left:0;">✏️</span>常用 AI 指令速查卡，貼在桌上隨時查
+            </li>
+            <li style="font-family:var(--font-body);font-size:18px;color:var(--ink-mid);padding-left:26px;position:relative;line-height:1.6;">
+              <span style="position:absolute;left:0;">✏️</span>LINE 學員群組永久加入，隨時發問
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="guarantee-cards">
+      <div class="sketch-card guarantee-card">
+        <span class="guarantee-emoji">🔁</span>
+        <h3 class="guarantee-title">保障一：可免費回訓一次</h3>
+        <p class="guarantee-detail">上完課如果覺得某些部分還不熟，沒關係。你可以在後續任一場次「免費」再上一次，完整複習，不用多花一毛錢。</p>
+      </div>
+      <div class="sketch-card guarantee-card">
+        <span class="guarantee-emoji">💬</span>
+        <h3 class="guarantee-title">保障二：課後 LINE 群組</h3>
+        <p class="guarantee-detail">修課學員加入專屬 LINE 學員群組。回家操作遇到問題，拍照或截圖傳到群組，老師和助教會回覆你，不用一個人摸索。</p>
+      </div>
+      <div class="sketch-card guarantee-card">
+        <span class="guarantee-emoji">📄</span>
+        <h3 class="guarantee-title">保障三：帶回講義</h3>
+        <p class="guarantee-detail">每個操作步驟整理成「圖解講義」，附截圖和說明。就算當天沒全記住，回家對著講義一樣可以自己練，不依賴記憶。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 手繪波浪分隔（連接深色 CTA） -->
+<div class="sketch-divider" style="background:#F8F2E4;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" height="56" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C80,40 200,4 320,24 C440,44 560,6 680,28 C800,50 920,8 1040,26 C1160,44 1280,6 1400,22 C1420,25 1435,20 1440,22 L1440,56 L0,56 Z" fill="#1E140A"/>
+    <path d="M0,20 C80,40 200,4 320,24 C440,44 560,6 680,28 C800,50 920,8 1040,26 C1160,44 1280,6 1400,22 C1420,25 1435,20 1440,22 L1440,0 L0,0 Z" fill="#F8F2E4"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 08 — 報名 CTA
+══════════════════════════════════════ -->
+<section id="section-cta">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="cta-title">✏️ 名額快滿了！現在就報名</span>
+    <p class="cta-urgency">5/23、5/30 各場限額 30 人，報名後立刻確認席次</p>
+
+    <!-- 三重保障摘要 -->
+    <div class="cta-guarantees">
+      <div class="cta-g-item">
+        <div class="cta-g-emoji">🔁</div>
+        <div class="cta-g-title">可回訓一次</div>
+        <div class="cta-g-desc">學完還可免費再來複習</div>
+      </div>
+      <div class="cta-g-item">
+        <div class="cta-g-emoji">💬</div>
+        <div class="cta-g-title">課後可提問</div>
+        <div class="cta-g-desc">LINE 群組，老師陪你學</div>
+      </div>
+      <div class="cta-g-item">
+        <div class="cta-g-emoji">📄</div>
+        <div class="cta-g-title">講義帶回家</div>
+        <div class="cta-g-desc">步驟圖解，隨時翻看練習</div>
+      </div>
+    </div>
+
+    <!-- 學員見證照 ⑧ ⑨ ⑩ -->
+    <div class="testimonial-strip">
+      <div class="testimonial-item">
+        <div class="img-frame" data-label="學員照⑧">
+          <img src="https://i.ibb.co/k2Gcnb7Y/Chat-GPT-Image-2026-4-23-10-39-57.png" alt="學員王女士">
+        </div>
+        <p class="t-quote">「上完課當天就會用語音打字，省好多時間！」</p>
+        <p class="t-name">— 王女士，55 歲</p>
+      </div>
+      <div class="testimonial-item">
+        <div class="img-frame" data-label="學員照⑨">
+          <img src="https://i.ibb.co/Q7Jk1kCm/Gemini-Generated-Image-538fks538fks538f.png" alt="學員陳先生">
+        </div>
+        <p class="t-quote">「老師教得很清楚，一點都不難，我都學會了！」</p>
+        <p class="t-name">— 陳先生，48 歲</p>
+      </div>
+      <div class="testimonial-item">
+        <div class="img-frame" data-label="學員照⑩">
+          <img src="https://i.ibb.co/B2xj7xXd/Gemini-Generated-Image-jf689wjf689wjf68.png" alt="學員林女士">
+        </div>
+        <p class="t-quote">「以前最怕用電腦，現在會叫 AI 幫我寫信了！」</p>
+        <p class="t-name">— 林女士，62 歲</p>
+      </div>
+    </div>
+
+    <!-- 3 步驟 -->
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p class="step-text">掃描下方 QR Code，或按按鈕填寫報名表</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p class="step-text">完成匯款 NT$1,000（帳號資訊在報名表內）</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p class="step-text">截圖匯款明細，傳給我們的 LINE 帳號確認</p>
+      </div>
+    </div>
+
+    <!-- QR + 按鈕 -->
+    <div class="cta-signup">
+      <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener" style="transform:rotate(-1deg);display:block;">
+        <img src="https://qr-official.line.me/gs/M_xat.0000181616.4vf_BW.png?oat_content=qr" alt="掃描報名 QR Code" style="width:210px;height:210px;border:3px solid var(--ink);border-radius:10px 24px 12px 22px/22px 10px 24px 12px;box-shadow:var(--shadow);display:block;">
+      </a>
+      <div class="cta-btn-wrap">
+        <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener" class="btn-sketch" style="transform:rotate(1deg);">
+          ✏️ 按這裡填報名表
+        </a>
+        <p class="cta-note">點擊後開啟報名表，填寫姓名與電話即完成</p>
+      </div>
+    </div>
+
+    <div class="cta-contact">
+      <span>📞 電話：<a href="tel:0492903412" style="color:var(--yellow);">049-2903412</a></span>
+      <span>💬 LINE：<a href="https://lin.ee/5i7hCx0" target="_blank" style="color:var(--yellow);">lin.ee/5i7hCx0</a></span>
+      <span>週一至五 09:00–18:00</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>AI BBC 課程推廣　｜　AI轉型不能等，3小時帶你無痛上手</p>
+  <p style="margin-top:6px;font-size:14px;">本頁面為內部開發使用，如有問題請聯繫主辦單位。</p>
+</footer>
+
+<script>
+  // 手機版：強制展開所有 accordion
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll('.outline-item details').forEach(function(el) {
+      el.setAttribute('open', '');
+    });
+  }
+</script>
+
+</body>
+</html>
