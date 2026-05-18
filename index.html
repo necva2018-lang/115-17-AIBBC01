@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI轉型不能等，3小時帶你無痛上手 | 草屯 AI 課程</title>
-  <meta name="description" content="不用懂電腦，帶手機就能學。5/23（六）草屯開課，名額有限，現在報名只要 NT$1,000。">
+  <meta name="description" content="不用懂電腦，帶手機就能學。6/27、7/25（六）草屯開課，上午場・下午場，名額有限，現在報名只要 NT$1,000。">
   <meta property="og:title" content="AI轉型不能等，3小時帶你無痛上手">
-  <meta property="og:description" content="不用懂電腦，帶手機就能學。5/23（六）草屯開課，名額有限">
+  <meta property="og:description" content="不用懂電腦，帶手機就能學。6/27・7/25（六）草屯開課，上午/下午場，名額有限">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_TW">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;700;900&family=Patrick+Hand&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     /* ══════════════════════════════════════
@@ -40,8 +40,22 @@
       --shadow: 4px 5px 0px rgba(30,20,10,0.18);
       --shadow-sm: 2px 3px 0px rgba(30,20,10,0.15);
 
-      --font-hand: 'Caveat', 'Comic Sans MS', cursive;
-      --font-body: 'Patrick Hand', 'Noto Sans TC', sans-serif;
+      --font-hand: 'Inter', 'Caveat', 'Comic Sans MS', cursive;
+      --font-body: 'Inter', 'Patrick Hand', 'Noto Sans TC', sans-serif;
+      --font-num:  'Inter', 'Noto Sans TC', sans-serif;
+    }
+
+    /* ══════════ 英數字全域印刷正體 ══════════ */
+    /* Inter 只含 Latin 字符，中文自動 fallback 至 Noto Sans TC */
+    :lang(zh), :lang(zh-Hant) {
+      font-variant-numeric: tabular-nums;
+    }
+    /* 數字/英文明確標明用 Inter，加強等寬數字對齊 */
+    .info-value, .session-time, .hero-badges .badge,
+    .info-value.price, .step-text, .payment-options li,
+    .benefit-desc, .outline-content p, .guarantee-detail {
+      font-family: var(--font-num);
+      font-variant-numeric: tabular-nums;
     }
 
     /* ══════════ Reset ══════════ */
@@ -983,6 +997,158 @@
       .outline-meta { display: none; }
       .cta-contact { flex-direction: column; gap: 10px; }
     }
+
+    /* ══════════ 課程場次卡片 ══════════ */
+    .sessions-wrap {
+      max-width: 860px;
+      margin: 0 auto 36px;
+    }
+    .sessions-section-title {
+      font-family: var(--font-hand);
+      font-size: clamp(20px, 2.8vw, 26px);
+      font-weight: 700;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sessions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .session-date-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .session-date-header {
+      border: 2.5px solid var(--ink);
+      border-radius: 8px 4px 6px 4px / 4px 8px 4px 6px;
+      padding: 14px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      color: #fff;
+    }
+    .session-blue  { background: var(--blue); }
+    .session-green { background: var(--green); }
+    .session-date-num {
+      font-family: var(--font-hand);
+      font-size: clamp(30px, 4.5vw, 42px);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .session-date-day {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      opacity: 0.88;
+    }
+    .session-card {
+      background: var(--paper-card);
+      border: 2.5px solid var(--ink);
+      border-radius: 4px 14px 6px 12px / 12px 4px 14px 6px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .session-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .session-card-blue  { border-left: 6px solid var(--blue);  background: #EBF5FF; }
+    .session-card-sky   { border-left: 6px solid #5B9BD5; background: #EEF5FF; }
+    .session-card-green { border-left: 6px solid var(--green); background: #EBF7EB; }
+    .session-card-teal  { border-left: 6px solid var(--teal);  background: #EBF7F5; }
+    .session-icon { font-size: 28px; flex-shrink: 0; }
+    .session-info { display: flex; flex-direction: column; gap: 3px; }
+    .session-label {
+      font-family: var(--font-hand);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .session-time {
+      font-family: var(--font-hand);
+      font-size: clamp(20px, 2.8vw, 26px);
+      font-weight: 900;
+      color: var(--ink);
+    }
+    .session-quota {
+      font-size: 13px;
+      color: var(--red);
+      font-family: var(--font-hand);
+      font-weight: 700;
+    }
+    .sessions-note {
+      margin-top: 16px;
+      text-align: center;
+      font-family: var(--font-hand);
+      font-size: 17px;
+      color: var(--ink-mid);
+      padding: 10px 16px;
+      background: var(--paper-yellow);
+      border: 1.5px dashed var(--yellow);
+      border-radius: 6px 14px 8px 12px / 12px 6px 14px 8px;
+    }
+    @media (max-width: 576px) {
+      .sessions-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════ CTA 場次選擇器 ══════════ */
+    .cta-session-selector {
+      max-width: 680px;
+      margin: 0 auto 36px;
+      text-align: center;
+    }
+    .cta-session-title {
+      font-family: var(--font-hand);
+      font-size: clamp(19px, 2.5vw, 22px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 16px;
+    }
+    .cta-session-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .cta-session-btn {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 8px 16px 10px 14px / 14px 8px 16px 10px;
+      padding: 14px 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      width: 100%;
+    }
+    .cta-session-btn:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(232,184,32,0.7);
+      transform: translateY(-2px);
+    }
+    .cta-session-btn.selected {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 3px rgba(232,184,32,0.35), var(--shadow);
+    }
+    .csb-date { font-family: var(--font-hand); font-size: 14px; color: rgba(255,255,255,0.65); }
+    .csb-type { font-family: var(--font-hand); font-size: 18px; font-weight: 700; color: #fff; }
+    .csb-time { font-family: var(--font-hand); font-size: 15px; color: rgba(255,255,255,0.8); font-weight: 700; }
+    .cta-session-btn.selected .csb-date { color: var(--ink-light); }
+    .cta-session-btn.selected .csb-type { color: var(--ink); }
+    .cta-session-btn.selected .csb-time { color: var(--ink-mid); }
+    .cta-session-hint {
+      font-family: var(--font-hand);
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      min-height: 24px;
+    }
   </style>
 </head>
 <body>
@@ -1014,8 +1180,8 @@
         <h1 class="hero-title">AI轉型不能等<br>3小時帶你無痛上手</h1>
         <p class="hero-subtitle">不用懂電腦，帶手機就能學，學完當天就能用</p>
         <div class="hero-badges">
-          <span class="badge">📅 5/23（六）開課</span>
-          <span class="badge">⏰ 3 小時</span>
+          <span class="badge">📅 6/27 · 7/25（六）</span>
+          <span class="badge">⏰ 上午場 & 下午場</span>
           <span class="badge">💰 NT$1,000</span>
           <span class="badge">👥 每場限 30 人</span>
         </div>
@@ -1299,20 +1465,60 @@
           <p class="info-note">需提前告知</p>
         </div>
       </div>
-      <div class="sketch-card info-card">
-        <span class="info-icon">🌅</span>
-        <div>
-          <p class="info-label">5/23（六）上午場</p>
-          <p class="info-value" style="font-size:22px;font-weight:900;">09:00 – 12:00</p>
+    </div>
+
+    <!-- 課程場次 -->
+    <div class="sessions-wrap">
+      <h3 class="sessions-section-title">📅 開課場次一覽</h3>
+      <div class="sessions-grid">
+        <!-- 6/27 -->
+        <div class="session-date-group">
+          <div class="session-date-header session-blue">
+            <span class="session-date-num">6/27</span>
+            <span class="session-date-day">（六）</span>
+          </div>
+          <div class="session-card session-card-blue">
+            <span class="session-icon">🌅</span>
+            <div class="session-info">
+              <span class="session-label">上午場</span>
+              <span class="session-time">09:00 – 13:00</span>
+              <span class="session-quota">⚠ 每場限額 30 人</span>
+            </div>
+          </div>
+          <div class="session-card session-card-sky">
+            <span class="session-icon">🌞</span>
+            <div class="session-info">
+              <span class="session-label">下午場</span>
+              <span class="session-time">13:30 – 16:30</span>
+              <span class="session-quota">⚠ 每場限額 30 人</span>
+            </div>
+          </div>
+        </div>
+        <!-- 7/25 -->
+        <div class="session-date-group">
+          <div class="session-date-header session-green">
+            <span class="session-date-num">7/25</span>
+            <span class="session-date-day">（六）</span>
+          </div>
+          <div class="session-card session-card-green">
+            <span class="session-icon">🌅</span>
+            <div class="session-info">
+              <span class="session-label">上午場</span>
+              <span class="session-time">09:00 – 13:00</span>
+              <span class="session-quota">⚠ 每場限額 30 人</span>
+            </div>
+          </div>
+          <div class="session-card session-card-teal">
+            <span class="session-icon">🌞</span>
+            <div class="session-info">
+              <span class="session-label">下午場</span>
+              <span class="session-time">13:30 – 16:30</span>
+              <span class="session-quota">⚠ 每場限額 30 人</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="sketch-card info-card">
-        <span class="info-icon">🌇</span>
-        <div>
-          <p class="info-label">5/23（六）下午場</p>
-          <p class="info-value" style="font-size:22px;font-weight:900;">13:30 – 16:30</p>
-        </div>
-      </div>
+      <p class="sessions-note">📝 報名表中可選擇日期場次，每場限額 30 人，額滿即停止報名</p>
     </div>
 
     <!-- 場地照 ⑥ ⑦ 並排 -->
@@ -1491,7 +1697,7 @@
 <section id="section-cta">
   <div class="container" style="position:relative;z-index:1;">
     <span class="cta-title">✏️ 名額快滿了！現在就報名</span>
-    <p class="cta-urgency">5/23（六）限額 30 人，報名後立刻確認席次</p>
+    <p class="cta-urgency">6/27・7/25（六），上午場 & 下午場，每場限額 30 人</p>
 
     <!-- 三重保障摘要 -->
     <div class="cta-guarantees">
@@ -1537,6 +1743,34 @@
       </div>
     </div>
 
+    <!-- 場次選擇器 -->
+    <div class="cta-session-selector">
+      <p class="cta-session-title">選擇你想參加的場次：</p>
+      <div class="cta-session-grid">
+        <button class="cta-session-btn" data-session="6/27 上午場">
+          <span class="csb-date">6/27（六）</span>
+          <span class="csb-type">🌅 上午場</span>
+          <span class="csb-time">09:00 – 13:00</span>
+        </button>
+        <button class="cta-session-btn" data-session="6/27 下午場">
+          <span class="csb-date">6/27（六）</span>
+          <span class="csb-type">🌞 下午場</span>
+          <span class="csb-time">13:30 – 16:30</span>
+        </button>
+        <button class="cta-session-btn" data-session="7/25 上午場">
+          <span class="csb-date">7/25（六）</span>
+          <span class="csb-type">🌅 上午場</span>
+          <span class="csb-time">09:00 – 13:00</span>
+        </button>
+        <button class="cta-session-btn" data-session="7/25 下午場">
+          <span class="csb-date">7/25（六）</span>
+          <span class="csb-type">🌞 下午場</span>
+          <span class="csb-time">13:30 – 16:30</span>
+        </button>
+      </div>
+      <p class="cta-session-hint" id="session-hint-text">👆 點選場次後，再按下方報名按鈕</p>
+    </div>
+
     <!-- 3 步驟 -->
     <div class="steps">
       <div class="step">
@@ -1559,7 +1793,7 @@
         <img src="https://qr-official.line.me/gs/M_xat.0000181616.4vf_BW.png?oat_content=qr" alt="掃描報名 QR Code" style="width:210px;height:210px;border:3px solid var(--ink);border-radius:10px 24px 12px 22px/22px 10px 24px 12px;box-shadow:var(--shadow);display:block;">
       </a>
       <div class="cta-btn-wrap">
-        <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener" class="btn-sketch" style="transform:rotate(1deg);">
+        <a href="https://www.surveycake.com/s/l78MP" target="_blank" rel="noopener" class="btn-sketch" id="cta-main-btn" style="transform:rotate(1deg);">
           ✏️ 按這裡填報名表
         </a>
         <p class="cta-note">點擊後開啟報名表，填寫姓名與電話即完成</p>
@@ -1586,6 +1820,21 @@
       el.setAttribute('open', '');
     });
   }
+
+  // 場次選擇器
+  var sessionBtns = document.querySelectorAll('.cta-session-btn');
+  var ctaMainBtn  = document.getElementById('cta-main-btn');
+  var sessionHint = document.getElementById('session-hint-text');
+
+  sessionBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sessionBtns.forEach(function(b) { b.classList.remove('selected'); });
+      this.classList.add('selected');
+      var session = this.dataset.session;
+      ctaMainBtn.textContent = '✏️ 報名 ' + session;
+      sessionHint.textContent = '✅ 已選擇：' + session + '　按上方按鈕完成報名';
+    });
+  });
 </script>
 
 </body>
